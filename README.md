@@ -11,56 +11,22 @@ PAT tuple, and utilities for generating plain ROOT ntuples from the PAT tuple.
 Installation
 ------------
 
-Current CMSSW version: ``CMSSW_10_2_22``.
-
-Get a supported CMSSW release area:
-
 ```bash
-  scram pro -n MyWorkingAreaName CMSSW <CMSSW_VERSION>
-  cd MyWorkingAreaName/src
-  # Setup your CMSSW environment
-  cmsenv
-  # SSH agent is optional, but will save you from typing your password many times
-  eval `ssh-agent -s`
-  ssh-add
-  # Run this before doing ANYTHING else in src
-  git cms-init
+cmsrel CMSSW_10_2_22
+cd CMSSW_10_2_22/src/
+cmsenv
+git cms-init
+git clone --recursive -b miniAOD_10_2_22 git@github.com:pallabidas/FinalStateAnalysis.git
+git cms-merge-topic cms-egamma:EgammaPostRecoTools
+git cms-addpkg EgammaAnalysis/ElectronTools
+rm EgammaAnalysis/ElectronTools/data -rf
+git clone git@github.com:cms-data/EgammaAnalysis-ElectronTools.git EgammaAnalysis/ElectronTools/data
+git cms-addpkg RecoMET/METFilters
+git cms-addpkg  RecoJets/JetProducers
+git clone -b 94X_weights_DYJets_inc_v2 git@github.com:cms-jet/PUjetID.git PUJetIDweights/
+cp PUJetIDweights/weights/pileupJetId_{94,102}X_Eta* $CMSSW_BASE/src/RecoJets/JetProducers/data/
+git cms-merge-topic -u alefisico:PUID_102X
+source $CMSSW_BASE/src/FinalStateAnalysis/environment.sh
+USER_CXXFLAGS="-Wno-delete-non-virtual-dtor -Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=sign-compare -Wno-error=reorder -Wno-error=delete-non-virtual-dtor -fpermissive -std=c++17" scram b -j 12
+
 ```
-
-Checkout the FinalStateAnalysis repository:
-
-```bash
-  git clone --recursive -b miniAOD_10_2_22 https://github.com/uwcms/FinalStateAnalysis.git
-  cd FinalStateAnalysis
-  source environment.sh
-```
-
-Checkout extra needed code:
-
-```bash
-  cd recipe/
-  # Checkout needed packages and apply patches
-  # do >> HZZ=1 ./recipe.sh  instead if you want H->ZZ MELA stuff.
-  ./recipe.sh
-  cd ..
-  # Setup FSA environment
-  source environment.sh
-  # Compile
-  pushd ..
-  scram b -j 8
-  popd
-```
-
-It is highly recommended to set up a python virtualenv with a number of nice tools:
-```bash
-  ./recipe/install_python.sh
-```
-The virtualenv is automatically activated by `environment.sh`.
-
-You must always set up the CMSSW environment + some extra variables from FinalStateAnalysis:
-
-```bash
-  cmsenv
-  source $CMSSW_BASE/src/FinalStateAnalysis/environment.sh
-```
-
