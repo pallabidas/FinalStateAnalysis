@@ -12,10 +12,10 @@ Author: Evan K. Friis
 '''
 
 import FWCore.ParameterSet.Config as cms
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
 
 # ID and isolation
-id = PSet(
+id = addargs(cms.PSet(),
     objectCutBasedIdLoose = '{object}.userInt("CutBasedIdLoose")',
     objectCutBasedIdMedium = '{object}.userInt("CutBasedIdMedium")',
     objectCutBasedIdMediumPrompt = '{object}.userInt("CutBasedIdMediumPrompt")',
@@ -110,7 +110,7 @@ id = PSet(
     #objectLowestMll = 'smallestMmm({object_idx},"")',
 )
 
-energyCorrections = PSet(
+energyCorrections = addargs(cms.PSet(),
     #objectPt_MuonEnUp = '? daughterHasUserCand({object_idx}, "mesUpMuons") ? daughterAsMuon({object_idx}).userCand("mesUpMuons").pt : -999.',
     #objectEta_MuonEnUp = '? daughterHasUserCand({object_idx}, "mesUpMuons") ? daughterAsMuon({object_idx}).userCand("mesUpMuons").eta : -999.',
     #objectPhi_MuonEnUp = '? daughterHasUserCand({object_idx}, "mesUpMuons") ? daughterAsMuon({object_idx}).userCand("mesUpMuons").phi : -999.',
@@ -122,7 +122,7 @@ energyCorrections = PSet(
 )
 
 # Information about the associated track
-tracking = PSet(
+tracking = addargs(cms.PSet(),
     objectPixHits = '? {object}.innerTrack.isNonnull ? '
         '{object}.innerTrack.hitPattern.numberOfValidPixelHits :-1',
     objectNormalizedChi2 = '? {object}.globalTrack.isNonnull ? '
@@ -141,8 +141,8 @@ tracking = PSet(
 )
 
 # Trigger matching
-trigger_50ns = PSet(
+trigger_50ns = addargs(cms.PSet(),
 )
 
-trigger_25ns = PSet(
+trigger_25ns = addargs(cms.PSet(),
 )

@@ -238,134 +238,151 @@ def remove(cfg_object, removals):
             continue
         setattr(output, key, remove(getattr(output, key), removals))
 
-    return output        
+    return output
 
+def addargs(cfg_object, *args, **kwargs):
+    if len(kwargs) == 0:
+        return cfg_object
 
-class PSet(cms.PSet):
-    def __init__(self, *args, **kwargs):
-        ''' Convenient version of PSet constructor
+    for key in kwargs.keys():
+        value = kwargs[key]
+        if isinstance(value, str):
+            kwargs[key] = cms.string(value)
+        elif isinstance(value, float):
+            kwargs[key] = cms.double(value)
+        elif isinstance(value, bool):
+            kwargs[key] = cms.bool(value)
+        elif isinstance(value, int):
+            kwargs[key] = cms.int32(value)
 
-        Automatically deduces the correct type of the arguments.
+    output = super(type(cfg_object), cfg_object).__init__()
+    return output
 
-        >>> mypset = PSet(
-        ...   aString = 'willBeACmsString',
-        ...   aCmsString = 'willStayACmsString',
-        ...   boolsWork = True,
-        ...   soDoFloats = 0.5,
-        ...   andInts = 2,
-        ... )
-        >>> mypset.aString
-        cms.string('willBeACmsString')
-        >>> mypset.aCmsString
-        cms.string('willStayACmsString')
-        >>> mypset.boolsWork
-        cms.bool(True)
-        >>> mypset.soDoFloats
-        cms.double(0.5)
-        >>> mypset.andInts
-        cms.int32(2)
-        '''
-        # Reduce boiler plate of input arguments
-        for key in kwargs.keys():
-            value = kwargs[key]
-            if isinstance(value, str):
-                kwargs[key] = cms.string(value)
-            elif isinstance(value, float):
-                kwargs[key] = cms.double(value)
-            elif isinstance(value, bool):
-                kwargs[key] = cms.bool(value)
-            elif isinstance(value, int):
-                kwargs[key] = cms.int32(value)
-
-        super(PSet, self).__init__(*args, **kwargs)
-
-    def clone(self):
-        ''' Make a copy.
-
-        >>> mytpset = PSet(
-        ...     a = 'a', b = 'b'
-        ... )
-        >>> clone = mytpset.clone()
-
-        The clone is still a PSet.
-
-        >>> isinstance(clone, PSet)
-        True
-        >>> clone.a = 'a2'
-        >>> mytpset.a, clone.a
-        (cms.string('a'), cms.string('a2'))
-        '''
-        output = super(PSet, self).clone()
-        output.__class__ = self.__class__
-        return output
-
-    def replace(self, **replacements):
-        ''' Apply the replacements.  Returns a modified copy.
-
-        >>> mytpset = PSet(
-        ...     object = 'objectPt'
-        ... )
-        >>> replaced = mytpset.replace(object='muon')
-        >>> replaced.muon
-        cms.string('muonPt')
-        '''
-        return replace(self, **replacements)
-
-    def format(self, **replacements):
-        ''' Apply the formatting.  Returns a modified copy.
-
-        >>> mytpset = PSet(
-        ...     muonPt = '{muon}.pt'
-        ... )
-        >>> replaced = mytpset.format(muon='daughter(0)')
-        >>> replaced.muonPt
-        cms.string('daughter(0).pt')
-        '''
-        clone = self.clone()
-        format(clone, **replacements)
-        return clone
-    
-    def remove(self, removals):
-        ''' 
-        Remove item from PSet, return modified copy.
-
-        Will move recursively down chains of PSets, but if a 
-            PSet-in-a-PSet has a name in removals, the whole
-            sub-PSet is removed
-
-        removals should be a regular expression that catches all the items to be removed, 
-            e.g. re.compile("(*MVAMet*)|([emtgj][1-9]?MtTo[Pp][fF]Met)"
-
-        >>> mytpset = PSet(
-        ...     foo = 'foo'
-        ...     fob = 'fob'
-        ...     bar = 'bar'
-        ...     ebar = 'ebar'
-        ...     tbar = 'tbar'
-        ...     bbar = 'bbar'
-        ... )
-        >>> toremove = re.compile("(foo)|([emt]?bar)")
-        >>> removed = mytpset.remove(toremove)
-        >>> hasattr(removed, 'foo')
-        False
-        >>> hasattr(removed, 'fob')
-        True
-        >> hasattr(removed, 'bar')
-        False
-        >> hasattr(removed, 'ebar')
-        False
-        >> hasattr(removed, 'tbar')
-        False
-        >> hasattr(removed, 'bbar')
-        True
-        '''
-        output = self.clone()
-        for key in output.parameters_().keys():
-            if removals.match(key):
-                delattr(output, key)
-                continue
-            setattr(output, key, remove(getattr(output, key), removals))
-        return output
+#class PSet(cms.PSet):
+#    def __init__(self, *args, **kwargs):
+#        ''' Convenient version of PSet constructor
+#
+#        Automatically deduces the correct type of the arguments.
+#
+#        >>> mypset = PSet(
+#        ...   aString = 'willBeACmsString',
+#        ...   aCmsString = 'willStayACmsString',
+#        ...   boolsWork = True,
+#        ...   soDoFloats = 0.5,
+#        ...   andInts = 2,
+#        ... )
+#        >>> mypset.aString
+#        cms.string('willBeACmsString')
+#        >>> mypset.aCmsString
+#        cms.string('willStayACmsString')
+#        >>> mypset.boolsWork
+#        cms.bool(True)
+#        >>> mypset.soDoFloats
+#        cms.double(0.5)
+#        >>> mypset.andInts
+#        cms.int32(2)
+#        '''
+#        # Reduce boiler plate of input arguments
+#        for key in kwargs.keys():
+#            value = kwargs[key]
+#            if isinstance(value, str):
+#                kwargs[key] = cms.string(value)
+#            elif isinstance(value, float):
+#                kwargs[key] = cms.double(value)
+#            elif isinstance(value, bool):
+#                kwargs[key] = cms.bool(value)
+#            elif isinstance(value, int):
+#                kwargs[key] = cms.int32(value)
+#
+#        super(PSet, self).__init__(*args, **kwargs)
+#
+#    def clone(self):
+#        ''' Make a copy.
+#
+#        >>> mytpset = PSet(
+#        ...     a = 'a', b = 'b'
+#        ... )
+#        >>> clone = mytpset.clone()
+#
+#        The clone is still a PSet.
+#
+#        >>> isinstance(clone, PSet)
+#        True
+#        >>> clone.a = 'a2'
+#        >>> mytpset.a, clone.a
+#        (cms.string('a'), cms.string('a2'))
+#        '''
+#        output = super(PSet, self).clone()
+#        output.__class__ = self.__class__
+#        return output
+#
+#    def replace(self, **replacements):
+#        ''' Apply the replacements.  Returns a modified copy.
+#
+#        >>> mytpset = PSet(
+#        ...     object = 'objectPt'
+#        ... )
+#        >>> replaced = mytpset.replace(object='muon')
+#        >>> replaced.muon
+#        cms.string('muonPt')
+#        '''
+#        return replace(self, **replacements)
+#
+#    def format(self, **replacements):
+#        ''' Apply the formatting.  Returns a modified copy.
+#
+#        >>> mytpset = PSet(
+#        ...     muonPt = '{muon}.pt'
+#        ... )
+#        >>> replaced = mytpset.format(muon='daughter(0)')
+#        >>> replaced.muonPt
+#        cms.string('daughter(0).pt')
+#        '''
+#        clone = self.clone()
+#        format(clone, **replacements)
+#        return clone
+#    
+#    def remove(self, removals):
+#        ''' 
+#        Remove item from PSet, return modified copy.
+#
+#        Will move recursively down chains of PSets, but if a 
+#            PSet-in-a-PSet has a name in removals, the whole
+#            sub-PSet is removed
+#
+#        removals should be a regular expression that catches all the items to be removed, 
+#            e.g. re.compile("(*MVAMet*)|([emtgj][1-9]?MtTo[Pp][fF]Met)"
+#
+#        >>> mytpset = PSet(
+#        ...     foo = 'foo'
+#        ...     fob = 'fob'
+#        ...     bar = 'bar'
+#        ...     ebar = 'ebar'
+#        ...     tbar = 'tbar'
+#        ...     bbar = 'bbar'
+#        ... )
+#        >>> toremove = re.compile("(foo)|([emt]?bar)")
+#        >>> removed = mytpset.remove(toremove)
+#        >>> hasattr(removed, 'foo')
+#        False
+#        >>> hasattr(removed, 'fob')
+#        True
+#        >> hasattr(removed, 'bar')
+#        False
+#        >> hasattr(removed, 'ebar')
+#        False
+#        >> hasattr(removed, 'tbar')
+#        False
+#        >> hasattr(removed, 'bbar')
+#        True
+#        '''
+#        output = self.clone()
+#        for key in output.parameters_().keys():
+#            if removals.match(key):
+#                delattr(output, key)
+#                continue
+#            setattr(output, key, remove(getattr(output, key), removals))
+#        return output
         
 class GetInfoVisotor(object):
     def __init__(self):

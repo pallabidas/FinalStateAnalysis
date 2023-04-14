@@ -12,10 +12,10 @@ Author: Evan K. Friis
 '''
 
 import FWCore.ParameterSet.Config as cms
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
 
 # ID and isolation
-id = PSet(
+id = addargs(cms.PSet(),
     objectCBIDVeto = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-veto")',
     objectCBIDLoose = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-loose")',
     objectCBIDMedium = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-medium")',
@@ -131,17 +131,17 @@ id = PSet(
     #objectLowestMll = 'smallestMee({object_idx},"")',
 )
 
-energyCorrections = PSet(
+energyCorrections = addargs(cms.PSet(),
 
 )
 
-tracking = PSet(
+tracking = addargs(cms.PSet(),
     #objectHasConversion = '{object}.userFloat("hasConversion")',
     objectMissingHits = 'getElectronMissingHits({object_idx})',
 )
 
 # Information about the matched supercluster
-supercluster = PSet(
+supercluster = addargs(cms.PSet(),
     objectSCEta = '{object}.superCluster().eta',
     objectSCPhi = '{object}.superCluster().phi',
     objectSCEnergy = '{object}.superCluster().energy',
@@ -151,11 +151,11 @@ supercluster = PSet(
     objectSCEtaWidth = '{object}.superCluster().etaWidth'   
 )
 
-trigger_50ns = PSet(
+trigger_50ns = addargs(cms.PSet(),
 )
 
-trigger_25ns_MC = PSet(
+trigger_25ns_MC = addargs(cms.PSet(),
 )
 
-trigger_25ns = PSet(
+trigger_25ns = addargs(cms.PSet(),
 )

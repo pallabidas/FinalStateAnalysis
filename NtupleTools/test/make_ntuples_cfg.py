@@ -563,7 +563,7 @@ if options.htt and options.isMC :
     process.rivetMethods = cms.Path(
         process.mergedGenParticles
         * process.myGenerator
-        * process.rivetProducerHTXS
+#        * process.rivetProducerHTXS
         * process.particleLevel
     )
 

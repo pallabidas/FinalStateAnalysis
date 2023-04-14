@@ -8,7 +8,7 @@ Author: Evan K. Friis, UW Madison
 
 import itertools
 import FWCore.ParameterSet.Config as cms
-from FinalStateAnalysis.Utilities.cfgtools import format, PSet
+from FinalStateAnalysis.Utilities.cfgtools import format, addargs, replace, remove
 # Need regular expressions to get rid of non-miniAOD branches
 import re
 
@@ -18,7 +18,7 @@ from FinalStateAnalysis.NtupleTools.templates import topology, event, candidates
 
 
 # Define the branches that go in all ntuples
-_common_template = PSet(
+_common_template = addargs(cms.PSet(),
     # Basic info about the final state
     topology.finalstate,
     # templates.Event num/lumi/run
@@ -49,7 +49,7 @@ _common_template = PSet(
 )
 
 # Define the branch templates for different object types.
-_tau_template = PSet(
+_tau_template = addargs(cms.PSet(),
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -59,7 +59,7 @@ _tau_template = PSet(
     topology.mtToMET,
 )
 
-_muon_template = PSet(
+_muon_template = addargs(cms.PSet(),
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -69,13 +69,13 @@ _muon_template = PSet(
     topology.mtToMET,
 )
 
-_bjet_template= PSet(
+_bjet_template= addargs(cms.PSet(),
     bjets.btagging,
     candidates.kinematics,
     bjets.pujets,
 )
 
-_electron_template = PSet(
+_electron_template = addargs(cms.PSet(),
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -198,19 +198,19 @@ def make_ntuple(*legs, **kwargs):
     if fullJES:
         if isShiftedMet : # don't include metShiftsForFullJES
             # which has a few redundant vars with shiftedMet
-            ntuple_config = PSet(
+            ntuple_config = addargs(
                 ntuple_config,
                 topology.fullJES
             )
         else : # isShiftedMet
-            ntuple_config = PSet(
+            ntuple_config = addargs(
                 ntuple_config,
                 topology.fullJES,
                 event.metShiftsForFullJES
             )
 
     if isShiftedMet :
-        ntuple_config = PSet(
+        ntuple_config = addargs(
             ntuple_config,
             event.shiftedMet
         )
@@ -227,7 +227,7 @@ def make_ntuple(*legs, **kwargs):
             )
 
     # Triggers we care about depend on run configuration
-    leg_triggers = { 'e':PSet(), 'm':PSet(), 't':PSet(), 'j':PSet() }
+    leg_triggers = { 'e':cms.PSet(), 'm':cms.PSet(), 't':cms.PSet(), 'j':cms.PSet() }
     if isMC:
         leg_triggers['e'] = electrons.trigger_25ns_MC
         lep_triggers = trigger.singleLepton_25ns_MC
@@ -238,7 +238,7 @@ def make_ntuple(*legs, **kwargs):
     diLep_triggers = trigger.doubleLepton_25ns
     triLep_triggers = trigger.tripleLepton
 
-    ntuple_config = PSet(
+    ntuple_config = addargs(
         ntuple_config,
         lep_triggers,
         diLep_triggers,
@@ -255,29 +255,29 @@ def make_ntuple(*legs, **kwargs):
     producer_suffix = kwargs.get('suffix', '')
 
     # custom ntuple psets
-    eventVariables = kwargs.get('eventVariables',PSet())
-    ntuple_config = PSet(
+    eventVariables = kwargs.get('eventVariables',cms.PSet())
+    ntuple_config = addargs(
         ntuple_config,
         eventVariables
     )
 
-    candidateVariables = kwargs.get('candidateVariables',PSet())
+    candidateVariables = kwargs.get('candidateVariables',cms.PSet())
     custVariables = {}
-    custVariables['e'] = kwargs.get('electronVariables',PSet())
-    custVariables['m'] = kwargs.get('muonVariables',PSet())
-    custVariables['t'] = kwargs.get('tauVariables',PSet())
-    custVariables['j'] = kwargs.get('jetVariables',PSet())
+    custVariables['e'] = kwargs.get('electronVariables',cms.PSet())
+    custVariables['m'] = kwargs.get('muonVariables',cms.PSet())
+    custVariables['t'] = kwargs.get('tauVariables',cms.PSet())
+    custVariables['j'] = kwargs.get('jetVariables',cms.PSet())
 
     leg_branch_templates = {}
     for v in ['e','m','t','j']:
-        leg_branch_templates[v] = PSet(
+        leg_branch_templates[v] = addargs(
             _leg_templates[v],
             leg_triggers[v],
             custVariables[v],
             candidateVariables,
         )
         if isShiftedMet and v!='j':
-            leg_branch_templates[v] = PSet(
+            leg_branch_templates[v] = cms.PSet(
                 leg_branch_templates[v],
                 topology.shiftedMtToMET
             )
@@ -294,18 +294,18 @@ def make_ntuple(*legs, **kwargs):
         object_labels.append(label)
 
         # Get a PSet describing the branches for this leg
-        leg_branches = leg_branch_templates[leg].replace(object=label)
+        leg_branches = replace(leg_branch_templates[leg], object=label)
 
         # Add to the total config
-        ntuple_config = PSet(
+        ntuple_config = addargs(
             ntuple_config,
             leg_branches,
         )
 
 
     # If basic jet information is desired for a non-jet final state, put it in
-    extraJetVariables = kwargs.get('extraJetVariables', PSet())
-    extra_jet_template = PSet(
+    extraJetVariables = kwargs.get('extraJetVariables', cms.PSet())
+    extra_jet_template = cms.PSet(
         topology.extraJet,
         extraJetVariables,
         )
@@ -314,22 +314,22 @@ def make_ntuple(*legs, **kwargs):
         format_labels[label] = 'evt.jets.at(%i)' % i
         format_labels[label + '_idx'] = '%i' % i
         
-        ntuple_config = PSet(
+        ntuple_config = addargs(
             ntuple_config,
             extra_jet_template.replace(object=label)            
             )
     
-    dicandidateVariables = kwargs.get('dicandidateVariables',PSet())
-    dicandidate_template = PSet(
+    dicandidateVariables = kwargs.get('dicandidateVariables',cms.PSet())
+    dicandidate_template = addargs(
         topology.pairs,
         dicandidateVariables
     )
 
     # Now we need to add all the information about the pairs
     for leg_a, leg_b in itertools.combinations(object_labels, 2):
-        ntuple_config = PSet(
+        ntuple_config = addargs(
             ntuple_config,
-            dicandidate_template.replace(object1=leg_a, object2=leg_b),
+            replace(dicandidate_template, object1=leg_a, object2=leg_b),
             )
         # Check if we want to enable SVfit
         # Only do SVfit in states with 2 or 4 leptons
@@ -355,7 +355,7 @@ def make_ntuple(*legs, **kwargs):
         if do_svfit:
             print "SV fitting legs %s and %s in final state %s" % (
                 leg_a, leg_b, ''.join(legs))
-            ntuple_config = PSet(
+            ntuple_config = addargs(
                 ntuple_config,
                 topology.svfit.replace(object1=leg_a, object2=leg_b)
             )
@@ -385,7 +385,7 @@ def make_ntuple(*legs, **kwargs):
 
     allRemovals = re.compile("(" + ")|(".join(notInMiniAOD) + ")")
     
-    ntuple_config = ntuple_config.remove(allRemovals)
+    ntuple_config = remove(ntuple_config, allRemovals)
 
     # Now build our analyzer EDFilter skeleton
     output = cms.EDFilter(

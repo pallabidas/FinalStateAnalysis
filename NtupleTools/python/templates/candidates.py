@@ -6,9 +6,10 @@ Author: Evan K. Friis
 
 '''
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
+import FWCore.ParameterSet.Config as cms
 
-kinematics = PSet(
+kinematics = addargs(cms.PSet(),
     objectPt = '{object}.pt',
     objectEta = '{object}.eta',
     #objectAbsEta = 'abs({object}.eta)',
@@ -18,7 +19,7 @@ kinematics = PSet(
     #objectRank ='{object}.userFloat("rankByPt")'
 )
 
-vertex_info = PSet(
+vertex_info = addargs(cms.PSet(),
     #objectVZ = '{object}.vz',
     #objectIP3D = 'getIP3D({object_idx})',
     #objectIP3DErr = 'getIP3DErr({object_idx})', # uncertainty of IP3D
@@ -30,7 +31,7 @@ vertex_info = PSet(
 )
 
 # The info about the associated pat::Jet
-base_jet = PSet(
+base_jet = addargs(cms.PSet(),
     #objectJetPt = '{object}.userFloat("jetPt")',
     #objectJetDR = '{object}.userFloat("jetDR")',
     #objectJetBtag = '? {object}.userCand("patJet").isNonnull ? '

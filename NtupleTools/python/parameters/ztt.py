@@ -3,7 +3,8 @@
 # and then loads any modifications to these parameters from a custom param file
 # passed via paramFile=/path/to/param/file.py
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
+import FWCore.ParameterSet.Config as cms
 from collections import OrderedDict
 
 parameters = {
@@ -61,7 +62,7 @@ parameters = {
 
 
     # additional variables for ntuple
-    'eventVariables' : PSet(
+    'eventVariables' : addargs(cms.PSet(),
 
         # Rivet code provides the Simplifed Template Cross Section values
         Rivet_stage0_cat='evt.getRivetInfo().stage0_cat',
@@ -149,69 +150,69 @@ parameters = {
         ##ps_weight_nlo='evt.lheweights().at(1081)',
         ##mm_weight_nlo='evt.lheweights().at(1082)',
 
-        PythiaWeight_nom='evt.geninfoweights().at(0)',
-        PythiaWeight_bas='evt.geninfoweights().at(1)',
-        ##Reduced
-        PythiaWeight_isr_muR0p707='evt.geninfoweights().at(2)',
-        PythiaWeight_fsr_muR0p707='evt.geninfoweights().at(3)',
-        PythiaWeight_isr_muR1p414='evt.geninfoweights().at(4)',
-        PythiaWeight_fsr_muR1p414='evt.geninfoweights().at(5)',
-        ##Default
-        PythiaWeight_isr_muR0p5='evt.geninfoweights().at(6)',
-        PythiaWeight_fsr_muR0p5='evt.geninfoweights().at(7)',
-        PythiaWeight_isr_muR2='evt.geninfoweights().at(8)',
-        PythiaWeight_fsr_muR2='evt.geninfoweights().at(9)',
-        ##Conservative
-        PythiaWeight_isr_muR0p25='evt.geninfoweights().at(10)',
-        PythiaWeight_fsr_muR0p25='evt.geninfoweights().at(11)',
-	PythiaWeight_isr_muR4='evt.geninfoweights().at(12)',
-        PythiaWeight_fsr_muR4='evt.geninfoweights().at(13)',
-        ##
-        PythiaWeight_fsr_G2GG_muR0p5='evt.geninfoweights().at(14)',
-        PythiaWeight_fsr_G2GG_muR2='evt.geninfoweights().at(15)',
-        PythiaWeight_fsr_G2QQ_muR0p5='evt.geninfoweights().at(16)',
-        PythiaWeight_fsr_G2QQ_muR2='evt.geninfoweights().at(17)',
-        PythiaWeight_fsr_Q2QG_muR0p5='evt.geninfoweights().at(18)',
-        PythiaWeight_fsr_Q2QG_muR2='evt.geninfoweights().at(19)',
-        PythiaWeight_fsr_X2XG_muR0p5='evt.geninfoweights().at(20)',
-        PythiaWeight_fsr_X2XG_muR2='evt.geninfoweights().at(21)',
-        ##
-        PythiaWeight_fsr_G2GG_cNSm2='evt.geninfoweights().at(22)',
-        PythiaWeight_fsr_G2GG_cNS2='evt.geninfoweights().at(23)',
-        PythiaWeight_fsr_G2QQ_cNSm2='evt.geninfoweights().at(24)',
-        PythiaWeight_fsr_G2QQ_cNS2='evt.geninfoweights().at(25)',
-        PythiaWeight_fsr_Q2QG_cNSm2='evt.geninfoweights().at(26)',
-        PythiaWeight_fsr_Q2QG_cNS2='evt.geninfoweights().at(27)',
-        PythiaWeight_fsr_X2XG_cNSm2='evt.geninfoweights().at(28)',
-        PythiaWeight_fsr_X2XG_cNS2='evt.geninfoweights().at(29)',
-        ##
-        PythiaWeight_isr_G2GG_muR0p5='evt.geninfoweights().at(30)',
-        PythiaWeight_isr_G2GG_muR2='evt.geninfoweights().at(31)',
-        PythiaWeight_isr_G2QQ_muR0p5='evt.geninfoweights().at(32)',
-        PythiaWeight_isr_G2QQ_muR2='evt.geninfoweights().at(33)',
-        PythiaWeight_isr_Q2QG_muR0p5='evt.geninfoweights().at(34)',
-        PythiaWeight_isr_Q2QG_muR2='evt.geninfoweights().at(35)',
-        PythiaWeight_isr_X2XG_muR0p5='evt.geninfoweights().at(36)',
-        PythiaWeight_isr_X2XG_muR2='evt.geninfoweights().at(37)',
-        ##
-        PythiaWeight_isr_G2GG_cNSm2='evt.geninfoweights().at(38)',
-        PythiaWeight_isr_G2GG_cNS2='evt.geninfoweights().at(39)',
-        PythiaWeight_isr_G2QQ_cNSm2='evt.geninfoweights().at(40)',
-        PythiaWeight_isr_G2QQ_cNS2='evt.geninfoweights().at(41)',
-        PythiaWeight_isr_Q2QG_cNSm2='evt.geninfoweights().at(42)',
-        PythiaWeight_isr_Q2QG_cNS2='evt.geninfoweights().at(43)',
-        PythiaWeight_isr_X2XG_cNSm2='evt.geninfoweights().at(44)',
-        PythiaWeight_isr_X2XG_cNS2='evt.geninfoweights().at(45)',
-        ##
-	lheweight_nominal='evt.lheweights().at(0)',
-	lheweight_muR1_muF2='evt.lheweights().at(1)',
-        lheweight_muR1_muF0p5='evt.lheweights().at(2)',
-        lheweight_muR2_muF1='evt.lheweights().at(3)',
-        lheweight_muR2_muF2='evt.lheweights().at(4)',
-        lheweight_muR2_muF0p5='evt.lheweights().at(5)',
-        lheweight_muR0p5_muF1='evt.lheweights().at(6)',
-        lheweight_muR0p5_muF2='evt.lheweights().at(7)',
-        lheweight_muR0p5_muF0p5='evt.lheweights().at(8)',
+#        PythiaWeight_nom='evt.geninfoweights().at(0)',
+#        PythiaWeight_bas='evt.geninfoweights().at(1)',
+#        ##Reduced
+#        PythiaWeight_isr_muR0p707='evt.geninfoweights().at(2)',
+#        PythiaWeight_fsr_muR0p707='evt.geninfoweights().at(3)',
+#        PythiaWeight_isr_muR1p414='evt.geninfoweights().at(4)',
+#        PythiaWeight_fsr_muR1p414='evt.geninfoweights().at(5)',
+#        ##Default
+#        PythiaWeight_isr_muR0p5='evt.geninfoweights().at(6)',
+#        PythiaWeight_fsr_muR0p5='evt.geninfoweights().at(7)',
+#        PythiaWeight_isr_muR2='evt.geninfoweights().at(8)',
+#        PythiaWeight_fsr_muR2='evt.geninfoweights().at(9)',
+#        ##Conservative
+#        PythiaWeight_isr_muR0p25='evt.geninfoweights().at(10)',
+#        PythiaWeight_fsr_muR0p25='evt.geninfoweights().at(11)',
+#	PythiaWeight_isr_muR4='evt.geninfoweights().at(12)',
+#        PythiaWeight_fsr_muR4='evt.geninfoweights().at(13)',
+#        ##
+#        PythiaWeight_fsr_G2GG_muR0p5='evt.geninfoweights().at(14)',
+#        PythiaWeight_fsr_G2GG_muR2='evt.geninfoweights().at(15)',
+#        PythiaWeight_fsr_G2QQ_muR0p5='evt.geninfoweights().at(16)',
+#        PythiaWeight_fsr_G2QQ_muR2='evt.geninfoweights().at(17)',
+#        PythiaWeight_fsr_Q2QG_muR0p5='evt.geninfoweights().at(18)',
+#        PythiaWeight_fsr_Q2QG_muR2='evt.geninfoweights().at(19)',
+#        PythiaWeight_fsr_X2XG_muR0p5='evt.geninfoweights().at(20)',
+#        PythiaWeight_fsr_X2XG_muR2='evt.geninfoweights().at(21)',
+#        ##
+#        PythiaWeight_fsr_G2GG_cNSm2='evt.geninfoweights().at(22)',
+#        PythiaWeight_fsr_G2GG_cNS2='evt.geninfoweights().at(23)',
+#        PythiaWeight_fsr_G2QQ_cNSm2='evt.geninfoweights().at(24)',
+#        PythiaWeight_fsr_G2QQ_cNS2='evt.geninfoweights().at(25)',
+#        PythiaWeight_fsr_Q2QG_cNSm2='evt.geninfoweights().at(26)',
+#        PythiaWeight_fsr_Q2QG_cNS2='evt.geninfoweights().at(27)',
+#        PythiaWeight_fsr_X2XG_cNSm2='evt.geninfoweights().at(28)',
+#        PythiaWeight_fsr_X2XG_cNS2='evt.geninfoweights().at(29)',
+#        ##
+#        PythiaWeight_isr_G2GG_muR0p5='evt.geninfoweights().at(30)',
+#        PythiaWeight_isr_G2GG_muR2='evt.geninfoweights().at(31)',
+#        PythiaWeight_isr_G2QQ_muR0p5='evt.geninfoweights().at(32)',
+#        PythiaWeight_isr_G2QQ_muR2='evt.geninfoweights().at(33)',
+#        PythiaWeight_isr_Q2QG_muR0p5='evt.geninfoweights().at(34)',
+#        PythiaWeight_isr_Q2QG_muR2='evt.geninfoweights().at(35)',
+#        PythiaWeight_isr_X2XG_muR0p5='evt.geninfoweights().at(36)',
+#        PythiaWeight_isr_X2XG_muR2='evt.geninfoweights().at(37)',
+#        ##
+#        PythiaWeight_isr_G2GG_cNSm2='evt.geninfoweights().at(38)',
+#        PythiaWeight_isr_G2GG_cNS2='evt.geninfoweights().at(39)',
+#        PythiaWeight_isr_G2QQ_cNSm2='evt.geninfoweights().at(40)',
+#        PythiaWeight_isr_G2QQ_cNS2='evt.geninfoweights().at(41)',
+#        PythiaWeight_isr_Q2QG_cNSm2='evt.geninfoweights().at(42)',
+#        PythiaWeight_isr_Q2QG_cNS2='evt.geninfoweights().at(43)',
+#        PythiaWeight_isr_X2XG_cNSm2='evt.geninfoweights().at(44)',
+#        PythiaWeight_isr_X2XG_cNS2='evt.geninfoweights().at(45)',
+#        ##
+#	lheweight_nominal='evt.lheweights().at(0)',
+#	lheweight_muR1_muF2='evt.lheweights().at(1)',
+#        lheweight_muR1_muF0p5='evt.lheweights().at(2)',
+#        lheweight_muR2_muF1='evt.lheweights().at(3)',
+#        lheweight_muR2_muF2='evt.lheweights().at(4)',
+#        lheweight_muR2_muF0p5='evt.lheweights().at(5)',
+#        lheweight_muR0p5_muF1='evt.lheweights().at(6)',
+#        lheweight_muR0p5_muF2='evt.lheweights().at(7)',
+#        lheweight_muR0p5_muF0p5='evt.lheweights().at(8)',
 #
         ##lheweight9='evt.lheweights[9]',
         ##lheweight10='evt.lheweights[10]',
@@ -328,11 +329,11 @@ parameters = {
     ),
 
     # candidates of form: objectVarName = 'string expression for selection'
-    'candidateVariables' : PSet(),
+    'candidateVariables' : addargs(cms.PSet(),),
 
 
 
-    'electronVariables' : PSet(
+    'electronVariables' : addargs(cms.PSet(),
         objectIsoDB03               = '({object}.pfIsolationVariables().sumChargedHadronPt + max( {object}.pfIsolationVariables().sumNeutralHadronEt \
                                     + {object}.pfIsolationVariables().sumPhotonEt - 0.5 * {object}.pfIsolationVariables().sumPUPt, 0.0)) / {object}.pt()',
 
@@ -378,7 +379,7 @@ parameters = {
 
 
 
-    'muonVariables' : PSet(
+    'muonVariables' : addargs(cms.PSet(),
         objectIsoDB03               = '({object}.pfIsolationR03().sumChargedHadronPt + max( {object}.pfIsolationR03().sumNeutralHadronEt \
                                         + {object}.pfIsolationR03().sumPhotonEt - 0.5 * {object}.pfIsolationR03().sumPUPt, 0.0)) / {object}.pt()',
         objectIsoDB04               = '({object}.pfIsolationR04().sumChargedHadronPt + max( {object}.pfIsolationR04().sumNeutralHadronEt \
@@ -446,7 +447,7 @@ parameters = {
 
 
 
-    'tauVariables' : PSet(
+    'tauVariables' : addargs(cms.PSet(),
         objectL1IsoTauMatch = 'l1extraIsoTauMatching({object_idx})',
         objectL1IsoTauPt = 'l1extraIsoTauPt({object_idx})',
         objectMatchesIsoMu20Tau27Path= r'matchToHLTPath({object_idx}, "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v\\d+", 0.5)',
@@ -510,16 +511,16 @@ parameters = {
 
 
 
-    'photonVariables' : PSet(),
+    'photonVariables' : addargs(cms.PSet(),),
 
 
 
-    'jetVariables' : PSet(),
+    'jetVariables' : addargs(cms.PSet(),),
 
 
 
     # dicandidates of form: object1_object2_VarName = 'string expression for candidate'
-    'dicandidateVariables' : PSet(
+    'dicandidateVariables' : addargs(cms.PSet(),
      #    object1_object2_doubleL1IsoTauMatch = 'doubleL1extraIsoTauMatching({object1_idx},{object2_idx})',
     ),
 }

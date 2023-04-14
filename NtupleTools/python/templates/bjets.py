@@ -10,9 +10,10 @@ i.e. daughter(1) or somesuch.
 
 '''
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
+import FWCore.ParameterSet.Config as cms
 
-btagging = PSet(
+btagging = addargs(cms.PSet(),
 	#Btagging
         objectCSVBtag     = '{object}.bDiscriminator("combinedSecondaryVertexBJetTags")',
         #objectPFJBPBtag   = '{object}.bDiscriminator("pfJetBProbabilityBJetTags")',
@@ -36,7 +37,7 @@ btagging = PSet(
 	objectJetFlavour ='{object}.hadronFlavour()',
 )
 
-pujets = PSet(
+pujets = addargs(cms.PSet(),
         objectIDTight='{object}.userFloat("idTight")',
         objectIDTightLepVeto='{object}.userFloat("idTightLepVeto")',
         objectIDLoose='{object}.userFloat("idLoose")',

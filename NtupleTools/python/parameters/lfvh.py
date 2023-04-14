@@ -3,7 +3,8 @@
 # and then loads any modifications to these parameters from a custom param file
 # passed via paramFile=/path/to/param/file.py
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+#from FinalStateAnalysis.Utilities.cfgtools import PSet
+import FWCore.ParameterSet.Config as cms
 
 parameters = {
     # minimal object kinematic cuts
@@ -55,14 +56,14 @@ parameters = {
     # cross cleaning for objects in final state
     'crossCleaning' : 'smallestDeltaR() > 0.3',
     # additional variables for ntuple
-    'eventVariables' : PSet(),
+    'eventVariables' : cms.PSet(),
     # candidates of form: objectVarName = 'string expression for selection'
-    'candidateVariables' : PSet(),
-    'electronVariables' : PSet(),
-    'muonVariables' : PSet(),
-    'tauVariables' : PSet(),
-    'photonVariables' : PSet(),
-    'jetVariables' : PSet(),
+    'candidateVariables' : cms.PSet(),
+    'electronVariables' : cms.PSet(),
+    'muonVariables' : cms.PSet(),
+    'tauVariables' :cms.PSet(),
+    'photonVariables' : cms.PSet(),
+    'jetVariables' : cms.PSet(),
     # dicandidates of form: object1_object2_VarName = 'string expression for candidate'
-    'dicandidateVariables' : PSet(),
+    'dicandidateVariables' : cms.PSet(),
 }

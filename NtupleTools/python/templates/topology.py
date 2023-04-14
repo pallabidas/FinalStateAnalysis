@@ -9,9 +9,10 @@ Author: Evan K. Friis
 
 '''
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
+import FWCore.ParameterSet.Config as cms
 
-mtToMET = PSet(
+mtToMET = addargs(cms.PSet(),
     #objectMtToPfMet_type1   = 'mtMET({object_idx}, "", ""     )',
     #objectDPhiToPfMet_type1 = 'deltaPhiToMEt({object_idx}, "", ""     )',
     ##MVA MET
@@ -19,7 +20,7 @@ mtToMET = PSet(
 )
 
 # these things break if you pass a shifted met
-shiftedMtToMET = PSet(
+shiftedMtToMET = addargs(cms.PSet(),
     ## Raw means no MET corrections
     #objectMtToPfMet_Raw = 'mtMET({object_idx}, "", "raw")',
 
@@ -58,7 +59,7 @@ shiftedMtToMET = PSet(
 )
 
 # Variables based on pairs of objects
-pairs = PSet(
+pairs = addargs(cms.PSet(),
     object1_object2_Mass = 'subcand({object1_idx}, {object2_idx}).get.mass',
     #object1_object2_Mt = 'subcand({object1_idx}, {object2_idx}).get.mt',
     #object1_object2_collinearmass = 'collinearMassMET({object1_idx}, "", {object2_idx},"","")',
@@ -107,7 +108,7 @@ pairs = PSet(
     #object1_object2_ToMETDPhi_Ty1 = 'twoParticleDeltaPhiToMEt({object1_idx}, {object2_idx}, "type1")',
 )
 
-svfit = PSet(
+svfit = addargs(cms.PSet(),
     #object1_object2_SVfitMass = 'SVfit({object1_idx},{object2_idx}).at(0)',
     #object1_object2_SVfitPt = 'SVfit({object1_idx},{object2_idx}).at(1)',
     #object1_object2_SVfitEta = 'SVfit({object1_idx},{object2_idx}).at(2)',
@@ -115,21 +116,20 @@ svfit = PSet(
     #object1_object2_SVfitMET = 'SVfit({object1_idx},{object2_idx}).at(4)',
 )
 
-finalstate = PSet(
+finalstate = addargs(cms.PSet(),
 )
 
 
-vbf = PSet(
-
+vbf = addargs(cms.PSet(),
 )
 
 
-extraJet = PSet(
+extraJet = addargs(cms.PSet(),
 )
 
 
 # Temporary variables for JES study
-fullJES = PSet(
+fullJES = addargs(cms.PSet(),
         ##deepcsvb1_pt_JetRelativeSampleDown = 'deepCSVJetVariables("userFloat(\'jesRelativeSample-\') > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & (bDiscriminator(\'pfDeepCSVJetTags:probb\') + bDiscriminator(\'pfDeepCSVJetTags:probbb\')) > 0.1241", 0.5).at(0)',
         ##deepcsvb1_pt_JetRelativeBalDown = 'deepCSVJetVariables("userFloat(\'jesRelativeBal-\') > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & (bDiscriminator(\'pfDeepCSVJetTags:probb\') + bDiscriminator(\'pfDeepCSVJetTags:probbb\')) > 0.1241", 0.5).at(0)',
         ##deepcsvb1_pt_JetEC2Down = 'deepCSVJetVariables("userFloat(\'jesEC2-\') > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & (bDiscriminator(\'pfDeepCSVJetTags:probb\') + bDiscriminator(\'pfDeepCSVJetTags:probbb\')) > 0.1241", 0.5).at(0)',

@@ -12,9 +12,10 @@ Author: Evan K. Friis
 
 '''
 
-from FinalStateAnalysis.Utilities.cfgtools import PSet
+from FinalStateAnalysis.Utilities.cfgtools import addargs
+import FWCore.ParameterSet.Config as cms
 
-info = PSet(
+info = addargs(cms.PSet(),
     objectGenDecayMode = '{object}.userInt("genDecayMode")',  
     objectLeadTrackPt = '{object}.leadCand().pt()',
     objectDecayMode = '{object}.decayMode',
@@ -27,7 +28,7 @@ info = PSet(
 
 
 # ID and isolation
-id = PSet(
+id = addargs(cms.PSet(),
 
     objectAgainstMuonLoose3 = '{object}.tauID("againstMuonLoose3")',
     objectAgainstMuonTight3 = '{object}.tauID("againstMuonTight3")',
