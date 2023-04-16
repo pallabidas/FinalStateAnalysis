@@ -112,7 +112,7 @@ options = TauVarParsing.TauVarParsing(
     runMVAMET=0,  # If one, (re)build the MVA MET (using pairwise algo)
     htt=1,         # If one, apply Higgs2Taus analysis settings
     era="2018",
-    fullJES=0,
+    fullJES=1,
     runningLocal=0, # For sqlite loading and other path names, record if we a running locally or on Condor for example
     runMETNoHF=0,  # If one, use get metnohf (needs to be recalculated in miniaodv1)
     usePUPPI=0,
@@ -128,7 +128,7 @@ options = TauVarParsing.TauVarParsing(
     runWZ=0,
     isLFV=0,
     runMetUncertainties=0,
-    metShift=0,
+    metShift=1,
     runFSRFilter=0, # 1 = filter for ZG, -1 inverts filter for DY
     eventsToSkip='',
     isEmbedded=0,

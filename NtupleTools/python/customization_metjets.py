@@ -13,8 +13,7 @@ def preMETFromJES(process, jSrc, vSrc, metSrc, metUpSrc, metDownSrc, mSrc, eSrc,
         # https://hypernews.cern.ch/HyperNews/CMS/get/jes/642/1/1.html
         if runningLocal : fName = "../../NtupleTools/data/RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt" # recommended by JetMET
         else :
-            cmsswversion=os.environ['CMSSW_VERSION']
-            fName = "{0}/src/FinalStateAnalysis/NtupleTools/data/RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt".format(cmsswversion)
+            fName = "RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt"
 
         modName = 'miniAODMETJesSystematicsEmbedding{0}'.format(postfix)
         mod = cms.EDProducer(
