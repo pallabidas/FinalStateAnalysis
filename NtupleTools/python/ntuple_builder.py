@@ -18,7 +18,7 @@ from FinalStateAnalysis.NtupleTools.templates import topology, event, candidates
 
 
 # Define the branches that go in all ntuples
-_common_template = addargs(cms.PSet(),
+_common_template = addargs(
     # Basic info about the final state
     topology.finalstate,
     # templates.Event num/lumi/run
@@ -49,7 +49,7 @@ _common_template = addargs(cms.PSet(),
 )
 
 # Define the branch templates for different object types.
-_tau_template = addargs(cms.PSet(),
+_tau_template = addargs(
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -59,7 +59,7 @@ _tau_template = addargs(cms.PSet(),
     topology.mtToMET,
 )
 
-_muon_template = addargs(cms.PSet(),
+_muon_template = addargs(
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -69,13 +69,13 @@ _muon_template = addargs(cms.PSet(),
     topology.mtToMET,
 )
 
-_bjet_template= addargs(cms.PSet(),
+_bjet_template= addargs(
     bjets.btagging,
     candidates.kinematics,
     bjets.pujets,
 )
 
-_electron_template = addargs(cms.PSet(),
+_electron_template = addargs(
     candidates.base_jet,
     candidates.kinematics,
     candidates.vertex_info,
@@ -277,7 +277,7 @@ def make_ntuple(*legs, **kwargs):
             candidateVariables,
         )
         if isShiftedMet and v!='j':
-            leg_branch_templates[v] = cms.PSet(
+            leg_branch_templates[v] = addargs(
                 leg_branch_templates[v],
                 topology.shiftedMtToMET
             )
@@ -305,7 +305,7 @@ def make_ntuple(*legs, **kwargs):
 
     # If basic jet information is desired for a non-jet final state, put it in
     extraJetVariables = kwargs.get('extraJetVariables', cms.PSet())
-    extra_jet_template = cms.PSet(
+    extra_jet_template = addargs(
         topology.extraJet,
         extraJetVariables,
         )

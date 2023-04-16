@@ -240,9 +240,13 @@ def remove(cfg_object, removals):
 
     return output
 
-def addargs(cfg_object, *args, **kwargs):
-    if len(kwargs) == 0:
-        return cfg_object
+def addargs(*args, **kwargs):
+    cfg_object = cms.PSet()
+
+    for pset in args:
+        for par in pset.parameters_().keys():
+            value = getattr(pset, par)
+            setattr(cfg_object, par, value)
 
     for key in kwargs.keys():
         value = kwargs[key]
@@ -254,9 +258,9 @@ def addargs(cfg_object, *args, **kwargs):
             kwargs[key] = cms.bool(value)
         elif isinstance(value, int):
             kwargs[key] = cms.int32(value)
+        setattr(cfg_object, key, kwargs[key])
 
-    output = super(type(cfg_object), cfg_object).__init__()
-    return output
+    return cfg_object
 
 #class PSet(cms.PSet):
 #    def __init__(self, *args, **kwargs):

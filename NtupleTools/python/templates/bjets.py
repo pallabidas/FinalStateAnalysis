@@ -11,9 +11,8 @@ i.e. daughter(1) or somesuch.
 '''
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs
-import FWCore.ParameterSet.Config as cms
 
-btagging = addargs(cms.PSet(),
+btagging = addargs(
 	#Btagging
         objectCSVBtag     = '{object}.bDiscriminator("combinedSecondaryVertexBJetTags")',
         #objectPFJBPBtag   = '{object}.bDiscriminator("pfJetBProbabilityBJetTags")',
@@ -37,21 +36,9 @@ btagging = addargs(cms.PSet(),
 	objectJetFlavour ='{object}.hadronFlavour()',
 )
 
-pujets = addargs(cms.PSet(),
+pujets = addargs(
         objectIDTight='{object}.userFloat("idTight")',
         objectIDTightLepVeto='{object}.userFloat("idTightLepVeto")',
         objectIDLoose='{object}.userFloat("idLoose")',
 	objectPUIDFullDiscriminant='{object}.userFloat("pileupJetId:fullDiscriminant")',
 )
-
-
-
-
-
-
-
-
-
-
-
-

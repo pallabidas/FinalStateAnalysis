@@ -7,9 +7,8 @@ Author: Evan K. Friis
 '''
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs
-import FWCore.ParameterSet.Config as cms
 
-kinematics = addargs(cms.PSet(),
+kinematics = addargs(
     objectPt = '{object}.pt',
     objectEta = '{object}.eta',
     #objectAbsEta = 'abs({object}.eta)',
@@ -19,7 +18,7 @@ kinematics = addargs(cms.PSet(),
     #objectRank ='{object}.userFloat("rankByPt")'
 )
 
-vertex_info = addargs(cms.PSet(),
+vertex_info = addargs(
     #objectVZ = '{object}.vz',
     #objectIP3D = 'getIP3D({object_idx})',
     #objectIP3DErr = 'getIP3DErr({object_idx})', # uncertainty of IP3D
@@ -31,7 +30,7 @@ vertex_info = addargs(cms.PSet(),
 )
 
 # The info about the associated pat::Jet
-base_jet = addargs(cms.PSet(),
+base_jet = addargs(
     #objectJetPt = '{object}.userFloat("jetPt")',
     #objectJetDR = '{object}.userFloat("jetDR")',
     #objectJetBtag = '? {object}.userCand("patJet").isNonnull ? '
@@ -65,4 +64,3 @@ base_jet = addargs(cms.PSet(),
     #objectJetHadronFlavour = '? {object}.userCand("patJet").isNonnull ? '
     #    '{object}.userCand("patJet").hadronFlavour : -100',
 )
-

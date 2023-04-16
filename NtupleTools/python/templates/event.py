@@ -12,7 +12,7 @@ import FWCore.ParameterSet.Config as cms
 from FinalStateAnalysis.Utilities.cfgtools import addargs
 
 # Vetos on extra stuff in the event
-num = addargs(cms.PSet(),
+num = addargs(
     evt=cms.vstring('evt.eventDouble', 'l'), # use unsigned long long branch
     lumi=cms.vstring('evt.evtId.luminosityBlock', 'I'),  # use int branch
     run=cms.vstring('evt.evtId.run', 'I'),  # use int branch
@@ -20,7 +20,7 @@ num = addargs(cms.PSet(),
     isembed=cms.vstring('evt.isEmbeddedSample', 'I'),
 )
 
-pileup = addargs(cms.PSet(),
+pileup = addargs(
     rho='evt.rho',
     #nvtx='evt.recoVertices.size',
     nvtx='evt.numberVertices',
@@ -28,7 +28,7 @@ pileup = addargs(cms.PSet(),
     nTruePU='? evt.puInfo.size > 0 ? evt.puInfo[1].getTrueNumInteractions :-1',
 )
 
-pv_info = addargs(cms.PSet(),
+pv_info = addargs(
     #pvX='? evt.pv.isNonnull() ? evt.pv.x : -999',
     #pvY='? evt.pv.isNonnull() ? evt.pv.y : -999',
     #pvZ='? evt.pv.isNonnull() ? evt.pv.z : -999',
@@ -43,7 +43,7 @@ pv_info = addargs(cms.PSet(),
     #pvRho = 'evt.pv.position.Rho',
 )
 
-met = addargs(cms.PSet(),
+met = addargs(
     type1_pfMetEt  = 'evt.met("pfmet").pt', 
     type1_pfMetPhi = 'evt.met("pfmet").phi',
     puppiMetEt  = 'evt.met("puppimet").pt',
@@ -52,7 +52,7 @@ met = addargs(cms.PSet(),
 )
 
 # these things break if you pass a shifted met to fsa
-shiftedMet = addargs(cms.PSet(),
+shiftedMet = addargs(
 
     type1_pfMet_shiftedPt_JERUp             = 'evt.metShift("pfmet","pt","jer+")',
     type1_pfMet_shiftedPhi_JERUp             = 'evt.metShift("pfmet","phi","jer+")',
@@ -188,7 +188,7 @@ shiftedMet = addargs(cms.PSet(),
 
 )
 
-metShiftsForFullJES = addargs(cms.PSet(),
+metShiftsForFullJES = addargs(
     type1_pfMet_shiftedPt_JetResUp             = 'evt.metShift("pfmet","pt","jres+")',
     type1_pfMet_shiftedPt_JetResDown           = 'evt.metShift("pfmet","pt","jres-")',
     type1_pfMet_shiftedPhi_JetResUp            = 'evt.metShift("pfmet","phi","jres+")',
@@ -205,7 +205,7 @@ metShiftsForFullJES = addargs(cms.PSet(),
     type1_pfMet_shiftedPt_UnclusteredEnUp      = 'evt.metShift("pfmet","pt","ues+")',
 )
 
-gen = addargs(cms.PSet(),
+gen = addargs(
     # Process ID used to simulate in Pythia
     #processID='evt.genEventInfo.signalProcessID',
     #isZtautau='evt.findDecay(23,15)',
@@ -222,8 +222,6 @@ gen = addargs(cms.PSet(),
     GenWeight='? evt.genEventInfo.weights().size>0 ? evt.genEventInfo.weights()[0] : 0',
 )
 
-tauSpinner = addargs(cms.PSet(),
+tauSpinner = addargs(
     #tauSpinnerWeight = 'evt.weight("tauSpinnerWeight")'
 )
-
-

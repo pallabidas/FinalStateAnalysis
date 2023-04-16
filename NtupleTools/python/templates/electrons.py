@@ -15,7 +15,7 @@ import FWCore.ParameterSet.Config as cms
 from FinalStateAnalysis.Utilities.cfgtools import addargs
 
 # ID and isolation
-id = addargs(cms.PSet(),
+id = addargs(
     objectCBIDVeto = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-veto")',
     objectCBIDLoose = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-loose")',
     objectCBIDMedium = '{object}.electronID("cutBasedElectronID-Fall17-94X-V2-medium")',
@@ -131,17 +131,17 @@ id = addargs(cms.PSet(),
     #objectLowestMll = 'smallestMee({object_idx},"")',
 )
 
-energyCorrections = addargs(cms.PSet(),
+energyCorrections = addargs(
 
 )
 
-tracking = addargs(cms.PSet(),
+tracking = addargs(
     #objectHasConversion = '{object}.userFloat("hasConversion")',
     objectMissingHits = 'getElectronMissingHits({object_idx})',
 )
 
 # Information about the matched supercluster
-supercluster = addargs(cms.PSet(),
+supercluster = addargs(
     objectSCEta = '{object}.superCluster().eta',
     objectSCPhi = '{object}.superCluster().phi',
     objectSCEnergy = '{object}.superCluster().energy',
@@ -151,11 +151,11 @@ supercluster = addargs(cms.PSet(),
     objectSCEtaWidth = '{object}.superCluster().etaWidth'   
 )
 
-trigger_50ns = addargs(cms.PSet(),
+trigger_50ns = addargs(
 )
 
-trigger_25ns_MC = addargs(cms.PSet(),
+trigger_25ns_MC = addargs(
 )
 
-trigger_25ns = addargs(cms.PSet(),
+trigger_25ns = addargs(
 )

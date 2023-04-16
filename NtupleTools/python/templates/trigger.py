@@ -14,15 +14,14 @@ the one with the lowest prescale (taking the first in case of a tie).
 '''
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs, replace
-import FWCore.ParameterSet.Config as cms
 
-_trig_template = addargs(cms.PSet(),
+_trig_template = addargs(
     namePass = 'evt.hltResult("paths")',
     #nameGroup = 'evt.hltGroup("paths")',
     #namePrescale = 'evt.hltPrescale("paths")',
 )
 
-singleLepton_25ns_MC = addargs(cms.PSet(),
+singleLepton_25ns_MC = addargs(
     replace(_trig_template,
         name='singleIsoTkMu22',
         paths=r'HLT_IsoTkMu22_v\\d+'
@@ -77,7 +76,7 @@ singleLepton_25ns_MC = addargs(cms.PSet(),
         ),
     )
 
-singleLepton_25ns = addargs(cms.PSet(),
+singleLepton_25ns = addargs(
     replace(_trig_template,
         name='singleIsoTkMu22',
         paths=r'HLT_IsoTkMu22_v\\d+'
@@ -136,7 +135,7 @@ singleLepton_25ns = addargs(cms.PSet(),
     #    ),
     )
 
-doubleLepton_25ns = addargs(cms.PSet(),
+doubleLepton_25ns = addargs(
     replace(_trig_template,
         name='mu12e23DZ',
         paths=r'HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v\\d+'
@@ -391,7 +390,7 @@ doubleLepton_25ns = addargs(cms.PSet(),
         ),
     )
 
-tripleLepton = addargs(cms.PSet(),
+tripleLepton = addargs(
     #_trig_template.replace(
     #    name='doubleMuSingleE',
     #    paths=r'HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v\\d+'

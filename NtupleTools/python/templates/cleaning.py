@@ -12,10 +12,9 @@ Author: Evan K. Friis
 '''
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs
-import FWCore.ParameterSet.Config as cms
 
 # Vetos on extra stuff in the event
-vetos = addargs(cms.PSet(),
+vetos = addargs(
     #MUON VETOS
 
     muVetoZTTp001dxyzR0 = 'vetoMuons(0.0, "pt > 10 & abs(eta) < 2.4 & ( ( pfIsolationR04().sumChargedHadronPt + max( pfIsolationR04().sumNeutralHadronEt + pfIsolationR04().sumPhotonEt - 0.5 * pfIsolationR04().sumPUPt, 0.0)) / pt() ) < 0.3 & isMediumMuon > 0 & abs( userFloat(\'ipDXY\') ) < 0.045 & abs( userFloat(\'dz\') ) < 0.2").size()',
@@ -116,6 +115,6 @@ vetos = addargs(cms.PSet(),
 
 )
 
-overlaps = addargs(cms.PSet(),
+overlaps = addargs(
    
 )

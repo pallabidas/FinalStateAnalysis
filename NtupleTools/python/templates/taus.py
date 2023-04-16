@@ -13,9 +13,8 @@ Author: Evan K. Friis
 '''
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs
-import FWCore.ParameterSet.Config as cms
 
-info = addargs(cms.PSet(),
+info = addargs(
     objectGenDecayMode = '{object}.userInt("genDecayMode")',  
     objectLeadTrackPt = '{object}.leadCand().pt()',
     objectDecayMode = '{object}.decayMode',
@@ -28,7 +27,7 @@ info = addargs(cms.PSet(),
 
 
 # ID and isolation
-id = addargs(cms.PSet(),
+id = addargs(
 
     objectAgainstMuonLoose3 = '{object}.tauID("againstMuonLoose3")',
     objectAgainstMuonTight3 = '{object}.tauID("againstMuonTight3")',
@@ -102,5 +101,3 @@ id = addargs(cms.PSet(),
     objectGenCharge = '? {object}.genParticleRef.isNonnull?  {object}.genParticleRef.charge : -999 ',
 
 )
-
-

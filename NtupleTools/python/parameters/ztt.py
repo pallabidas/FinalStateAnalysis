@@ -4,7 +4,6 @@
 # passed via paramFile=/path/to/param/file.py
 
 from FinalStateAnalysis.Utilities.cfgtools import addargs
-import FWCore.ParameterSet.Config as cms
 from collections import OrderedDict
 
 parameters = {
@@ -62,7 +61,7 @@ parameters = {
 
 
     # additional variables for ntuple
-    'eventVariables' : addargs(cms.PSet(),
+    'eventVariables' : addargs(
 
         # Rivet code provides the Simplifed Template Cross Section values
         Rivet_stage0_cat='evt.getRivetInfo().stage0_cat',
@@ -329,11 +328,11 @@ parameters = {
     ),
 
     # candidates of form: objectVarName = 'string expression for selection'
-    'candidateVariables' : addargs(cms.PSet(),),
+    'candidateVariables' : addargs(),
 
 
 
-    'electronVariables' : addargs(cms.PSet(),
+    'electronVariables' : addargs(
         objectIsoDB03               = '({object}.pfIsolationVariables().sumChargedHadronPt + max( {object}.pfIsolationVariables().sumNeutralHadronEt \
                                     + {object}.pfIsolationVariables().sumPhotonEt - 0.5 * {object}.pfIsolationVariables().sumPUPt, 0.0)) / {object}.pt()',
 
@@ -379,7 +378,7 @@ parameters = {
 
 
 
-    'muonVariables' : addargs(cms.PSet(),
+    'muonVariables' : addargs(
         objectIsoDB03               = '({object}.pfIsolationR03().sumChargedHadronPt + max( {object}.pfIsolationR03().sumNeutralHadronEt \
                                         + {object}.pfIsolationR03().sumPhotonEt - 0.5 * {object}.pfIsolationR03().sumPUPt, 0.0)) / {object}.pt()',
         objectIsoDB04               = '({object}.pfIsolationR04().sumChargedHadronPt + max( {object}.pfIsolationR04().sumNeutralHadronEt \
@@ -447,7 +446,7 @@ parameters = {
 
 
 
-    'tauVariables' : addargs(cms.PSet(),
+    'tauVariables' : addargs(
         objectL1IsoTauMatch = 'l1extraIsoTauMatching({object_idx})',
         objectL1IsoTauPt = 'l1extraIsoTauPt({object_idx})',
         objectMatchesIsoMu20Tau27Path= r'matchToHLTPath({object_idx}, "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v\\d+", 0.5)',
@@ -511,16 +510,16 @@ parameters = {
 
 
 
-    'photonVariables' : addargs(cms.PSet(),),
+    'photonVariables' : addargs(),
 
 
 
-    'jetVariables' : addargs(cms.PSet(),),
+    'jetVariables' : addargs(),
 
 
 
     # dicandidates of form: object1_object2_VarName = 'string expression for candidate'
-    'dicandidateVariables' : addargs(cms.PSet(),
+    'dicandidateVariables' : addargs(
      #    object1_object2_doubleL1IsoTauMatch = 'doubleL1extraIsoTauMatching({object1_idx},{object2_idx})',
     ),
 }
