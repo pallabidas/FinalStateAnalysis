@@ -282,16 +282,16 @@ process.load('Configuration.StandardSequences.Services_cff')
 # Need the global tag for geometry etc.
 envvar = 'mcgt' if options.isMC else 'datagt'
 
-GT = {'mcgt': '102X_upgrade2018_realistic_v21', 'datagt': '102X_dataRun2_Prompt_v16'} # For data run D
+GT = {'mcgt': '106X_upgrade2018_realistic_v16_L1v1', 'datagt': '106X_dataRun2_v37'}
 
 if options.era=="2018":
-  GT = {'mcgt': '102X_upgrade2018_realistic_v21', 'datagt': '102X_dataRun2_v13'}
-if options.era=="2018prompt":
-  GT = {'mcgt': '102X_upgrade2018_realistic_v21', 'datagt': '102X_dataRun2_Prompt_v16'}
+  GT = {'mcgt': '106X_upgrade2018_realistic_v16_L1v1', 'datagt': '106X_dataRun2_v37'}
 if options.era=="2017":
-  GT = {'mcgt': '102X_mc2017_realistic_v8', 'datagt': '102X_dataRun2_v13'}
+  GT = {'mcgt': '106X_mc2017_realistic_v10', 'datagt': '106X_dataRun2_v37'}
 if options.era=="2016":
-  GT = {'mcgt': '102X_mcRun2_asymptotic_v8', 'datagt': '102X_dataRun2_v13'}
+  GT = {'mcgt': '106X_mcRun2_asymptotic_v17', 'datagt': '106X_dataRun2_v37'}
+if options.era=="2016APV":
+  GT = {'mcgt': '106X_mcRun2_asymptotic_preVFP_v11', 'datagt': '106X_dataRun2_v37'}
 
 
 from Configuration.AlCa.GlobalTag import GlobalTag
@@ -384,33 +384,43 @@ process.load ("CondCore.CondDB.CondDB_cfi")
 # Defaults to running correctly for Condor, you can
 # pass flag to run locally just fine here with runningLocal=1
 
-sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Autumn18_V19_MC' if options.isMC else 'Autumn18_RunABCD_V19_DATA')
+sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Summer19UL18_V5_MC' if options.isMC else 'Summer19UL18_V5_DATA')
 if options.runningLocal :
-    sqlitePath = '../data/{0}.db'.format('Autumn18_V19_MC' if options.isMC else 'Autumn18_RunABCD_V19_DATA' )
+    sqlitePath = '../data/{0}.db'.format('Summer19UL18_V5_MC' if options.isMC else 'Summer19UL18_V5_DATA' )
 
 if options.era=="2017":
-    sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Fall17_17Nov2017_V32_94X_MC' if options.isMC else 'Fall17_17Nov2017_V32_94X_DATA')
+    sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Summer19UL17_V5_MC' if options.isMC else 'Summer19UL17_RunBCDEF_V5_DATA')
     if options.runningLocal :
-        sqlitePath = '../data/{0}.db'.format('Fall17_17Nov2017_V32_94X_MC' if options.isMC else 'Fall17_17Nov2017_V32_94X_DATA' )
+        sqlitePath = '../data/{0}.db'.format('Summer19UL17_V5_MC' if options.isMC else 'Summer19UL17_RunBCDEF_V5_DATA' )
 
 if options.era=="2016":
-    sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Summer16_07Aug2017_V11_MC' if options.isMC else 'Summer16_07Aug2017All_V11_DATA')
+    sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Summer19UL16_V7_MC' if options.isMC else 'Summer19UL16_RunBCDEFGH_Combined_V7_DATA')
     if options.runningLocal :
-        sqlitePath = '../data/{0}.db'.format('Summer16_07Aug2017_V11_MC' if options.isMC else 'Summer16_07Aug2017All_V11_DATA' )
+        sqlitePath = '../data/{0}.db'.format('Summer19UL16_V7_MC' if options.isMC else 'Summer19UL16_RunBCDEFGH_Combined_V7_DATA' )
 
-JECtag="JetCorrectorParametersCollection_Autumn18_RunABCD_V19_DATA_AK4PFchs"
+if options.era=="2016APV":
+    sqlitePath = '/{0}/src/FinalStateAnalysis/NtupleTools/data/{1}.db'.format(cmsswversion,'Summer19UL16APV_V7_MC' if options.isMC else 'Summer19UL16_RunBCDEFGH_Combined_V7_DATA')
+    if options.runningLocal :
+        sqlitePath = '../data/{0}.db'.format('Summer19UL16APV_V7_MC' if options.isMC else 'Summer19UL16_RunBCDEFGH_Combined_V7_DATA' )
+
+JECtag="JetCorrectorParametersCollection_Summer19UL18_V5_DATA_AK4PFchs"
 if options.isMC:
-    JECtag="JetCorrectorParametersCollection_Autumn18_V19_MC_AK4PFchs"
+    JECtag="JetCorrectorParametersCollection_Summer19UL18_V5_MC_AK4PFchs"
 
 if options.era=="2017":
-    JECtag="JetCorrectorParametersCollection_Fall17_17Nov2017_V32_94X_DATA_AK4PFchs"
+    JECtag="JetCorrectorParametersCollection_Summer19UL17_RunBCDEF_V5_DATA_AK4PFchs"
     if options.isMC:
-        JECtag="JetCorrectorParametersCollection_Fall17_17Nov2017_V32_94X_MC_AK4PFchs"
+        JECtag="JetCorrectorParametersCollection_Summer19UL17_V5_MC_AK4PFchs"
 
 if options.era=="2016":
-    JECtag="JetCorrectorParametersCollection_Summer16_07Aug2017All_V11_DATA_AK4PFchs"
+    JECtag="JetCorrectorParametersCollection_Summer19UL16_RunBCDEFGH_Combined_V7_DATA_AK4PFchs"
     if options.isMC:
-        JECtag="JetCorrectorParametersCollection_Summer16_07Aug2017_V11_MC_AK4PFchs"
+        JECtag="JetCorrectorParametersCollection_Summer19UL16_V7_MC_AK4PFchs"
+
+if options.era=="2016APV":
+    JECtag="JetCorrectorParametersCollection_Summer19UL16_RunBCDEFGH_Combined_V7_DATA_AK4PFchs"
+    if options.isMC:
+        JECtag="JetCorrectorParametersCollection_Summer19UL16APV_V7_MC_AK4PFchs"
 
 process.jec = cms.ESSource("PoolDBESSource",
          DBParameters = cms.PSet(messageLevel = cms.untracked.int32(0)),
@@ -454,10 +464,10 @@ if options.era=="2018" or options.era=="2018prompt" or options.era=="2017":
    prefiring_year='2017BtoF'
 
 process.prefiringweight = cms.EDProducer(
-        "L1ECALPrefiringWeightProducer",
-        DataEra=cms.string(prefiring_year),  # Use 2016BtoH for 2016
+        "L1PrefiringWeightProducer",
+        #DataEra=cms.string(prefiring_year),  # Use 2016BtoH for 2016
         UseJetEMPt=cms.bool(False),  # can be set to true to use jet prefiring maps parametrized vs pt(em) instead of pt
-        PrefiringRateSystematicUncty=cms.double(0.2)  # Minimum relative prefiring uncty per object
+        #PrefiringRateSystematicUncty=cms.double(0.2)  # Minimum relative prefiring uncty per object
 )
 process.add_prefiringweight = cms.Path()
 process.add_prefiringweight += process.prefiringweight
@@ -540,6 +550,7 @@ if options.htt and options.isMC :
 
     process.particleLevel = cms.EDProducer("ParticleLevelProducer",
         src = cms.InputTag("myGenerator:unsmeared"),
+        doJetClustering = cms.bool(True),
         usePromptFinalStates = cms.bool(True), # for leptons, neutrinos
         excludePromptLeptonsFromJetClustering = cms.bool(False),
         excludeNeutrinosFromJetClustering = cms.bool(True),
@@ -645,6 +656,10 @@ process.filterFlags = cms.EDProducer(
     verbose = cms.untracked.bool(False),
 )
 
+process.BadPFMuonFilter.vtx = cms.InputTag("offlineSlimmedPrimaryVertices")
+
+process.BadChargedCandidateFilter.vtx = cms.InputTag("offlineSlimmedPrimaryVertices")
+
 process.load('RecoMET.METFilters.ecalBadCalibFilter_cfi')
 
 baddetEcallist = cms.vuint32(
@@ -744,6 +759,8 @@ fs_daughter_inputs['jets'] = 'updatedPatJetsTransientCorrectedNewDFTraining2'
 #########################################################
 ### embed some things we need before object selection ###
 #########################################################
+
+
 
 # HZZ id labels
 electronMVAGeneralIDLabel = "BDTIDGeneral"
@@ -1085,7 +1102,6 @@ if options.passThru:
 
 if options.dump:
     print process.dumpPython()
-
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 

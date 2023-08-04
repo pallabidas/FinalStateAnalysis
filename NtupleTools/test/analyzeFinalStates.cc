@@ -1,5 +1,5 @@
 #include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateAnalysis.h"
-#include "FWCore/PythonParameterSet/interface/MakeParameterSets.h"
+#include "FWCore/PythonParameterSet/src/MakePyBind11ParameterSets.cc"
 
 #include "DataFormats/FWLite/interface/ChainEvent.h"
 #include "DataFormats/FWLite/interface/LuminosityBlock.h"
@@ -8,7 +8,7 @@
 #include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include "FWCore/ParameterSet/interface/ProcessDesc.h"
 #include "PhysicsTools/FWLite/interface/TFileService.h"
-#include "FWCore/PythonParameterSet/interface/PythonProcessDesc.h"
+#include "FWCore/PythonFramework/interface/PythonEventProcessor.h"
 
 #include <TFile.h>
 #include <TSystem.h>

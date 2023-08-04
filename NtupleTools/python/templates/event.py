@@ -219,7 +219,7 @@ gen = addargs(
     genHTT='evt.genHTT',
     NUP='evt.lesHouches.NUP',
     EmbPtWeight='evt.generatorFilter.filterEfficiency',
-    GenWeight='? evt.genEventInfo.weights().size>0 ? evt.genEventInfo.weights()[0] : 0',
+    GenWeight='? evt.genEventInfo.weights().size > 0 ? evt.genEventInfo.weights().at(0) : 0',
 )
 
 tauSpinner = addargs(
