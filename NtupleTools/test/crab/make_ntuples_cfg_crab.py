@@ -98,7 +98,7 @@ import FinalStateAnalysis.Utilities.TauVarParsing as TauVarParsing
 options = TauVarParsing.TauVarParsing(
     skipEvents=0,  # Start at an event offset (for debugging)
     reportEvery=100,
-    channels='mt,et,em',
+    channels='mt',
     rerunMCMatch=False,
     eventView=0,  # Switch between final state view (0) and event view (1)
     passThru=0,  # Turn off preselections
@@ -246,6 +246,15 @@ if options.eventsToProcess:
 if options.lumiMask:
     print "Applying LumiMask from", options.lumiMask
     process.source.lumisToProcess = options.buildPoolSourceLumiMask()
+
+listEventsToProcess = []
+fileEventsToProcess = open("/afs/cern.ch/work/p/pdas/haa/summer23/CMSSW_10_6_30/src/FinalStateAnalysis/NtupleTools/test/crab/VBFHtoTauTau.txt","r")
+for line in fileEventsToProcess:
+        cleanLine = line.rstrip()
+        listEventsToProcess.append(cleanLine+"-"+cleanLine)
+
+rangeEventsToProcess = cms.untracked.VEventRange(listEventsToProcess)
+process.source.eventsToProcess = rangeEventsToProcess
 
 process.TFileService = cms.Service(
     "TFileService", fileName=cms.string(options.outputFile)
