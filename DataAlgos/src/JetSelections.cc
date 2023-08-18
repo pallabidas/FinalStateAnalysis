@@ -253,7 +253,7 @@ std::vector<double> computeJetInfo(
 
   int numJets = jets.size();
   if (numJets == 0) {
-    for (int i = 0; i < 12; ++i) {
+    for (int i = 0; i < 14; ++i) {
       output.push_back( -9999 );
     }
   }
@@ -273,6 +273,7 @@ std::vector<double> computeJetInfo(
      output.push_back( firstJet->bDiscriminator("pfDeepCSVJetTags:probb") + firstJet->bDiscriminator("pfDeepCSVJetTags:probbb") );
      output.push_back( (firstJet->bDiscriminator("pfDeepFlavourJetTags:probb") + firstJet->bDiscriminator("pfDeepFlavourJetTags:probbb") + firstJet->bDiscriminator("pfDeepFlavourJetTags:problepb")));
      output.push_back( firstJet->hadronFlavour() );
+     output.push_back( firstJet->userFloat("PNetScore") );
 
 
      if (sysTag.empty()) output.push_back( subleadJet.pt() );
@@ -282,6 +283,7 @@ std::vector<double> computeJetInfo(
      output.push_back( secondJet->bDiscriminator("pfDeepCSVJetTags:probb") + secondJet->bDiscriminator("pfDeepCSVJetTags:probbb") );
      output.push_back( (secondJet->bDiscriminator("pfDeepFlavourJetTags:probb") + secondJet->bDiscriminator("pfDeepFlavourJetTags:probbb") + secondJet->bDiscriminator("pfDeepFlavourJetTags:problepb")));
      output.push_back( secondJet->hadronFlavour() );
+     output.push_back( secondJet->userFloat("PNetScore") );
    }
 
    if (numJets==1){
@@ -296,8 +298,9 @@ std::vector<double> computeJetInfo(
      output.push_back( firstJet->bDiscriminator("pfDeepCSVJetTags:probb") + firstJet->bDiscriminator("pfDeepCSVJetTags:probbb") );
      output.push_back( (firstJet->bDiscriminator("pfDeepFlavourJetTags:probb") + firstJet->bDiscriminator("pfDeepFlavourJetTags:probbb") + firstJet->bDiscriminator("pfDeepFlavourJetTags:problepb")));
      output.push_back( firstJet->hadronFlavour() );
+     output.push_back( firstJet->userFloat("PNetScore") );
 
-     for (int i = 0; i < 6; ++i) {
+     for (int i = 0; i < 7; ++i) {
        output.push_back( -9999 );
      }
    }

@@ -26,4 +26,7 @@
   <use   name="RecoBTag/SecondaryVertex"/>
 
   <use   name="SimDataFormats/HTXS"/>
+
+  <use   name="PhysicsTools/ONNXRuntime"/>
+  <use   name="RecoBTag/FeatureTools"/>
 </library>

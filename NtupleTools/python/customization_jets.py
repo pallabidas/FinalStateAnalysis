@@ -12,8 +12,12 @@ def preJets(process, jSrc, jupSrc, jdownSrc, vSrc, metSrc,mSrc, eSrc, **kwargs):
 
     mod = cms.EDProducer(
         "MiniAODJetIdEmbedder",
-        src=cms.InputTag(jSrc),
-        genParticles=cms.InputTag("prunedGenParticles")
+        src = cms.InputTag(jSrc),
+        genParticles = cms.InputTag("prunedGenParticles"),
+        vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+        secondaryVertices = cms.InputTag("slimmedSecondaryVertices"),
+        preprocess_json = cms.FileInPath("FinalStateAnalysis/PatTools/data/preprocess.json"),
+        model_path = cms.FileInPath("FinalStateAnalysis/PatTools/data/model.onnx"),
     )
     modName = 'miniPatJets{0}'.format(postfix)
     setattr(process,modName,mod)
