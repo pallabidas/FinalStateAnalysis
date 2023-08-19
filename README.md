@@ -11,56 +11,43 @@ PAT tuple, and utilities for generating plain ROOT ntuples from the PAT tuple.
 Installation
 ------------
 
-Current CMSSW version: ``CMSSW_10_2_22``.
+Current recommended UL CMSSW version: ``CMSSW_10_6_30``.
 
-Get a supported CMSSW release area:
+Get release area:
 
 ```bash
-  scram pro -n MyWorkingAreaName CMSSW <CMSSW_VERSION>
-  cd MyWorkingAreaName/src
+  cmsrel CMSSW_10_6_30
+  cd CMSSW_10_6_30/src
   # Setup your CMSSW environment
   cmsenv
-  # SSH agent is optional, but will save you from typing your password many times
-  eval `ssh-agent -s`
-  ssh-add
-  # Run this before doing ANYTHING else in src
   git cms-init
 ```
 
 Checkout the FinalStateAnalysis repository:
 
 ```bash
-  git clone --recursive -b miniAOD_10_2_22 https://github.com/uwcms/FinalStateAnalysis.git
+  git clone -b UL_10_6_30 https://github.com/pallabidas/FinalStateAnalysis.git
+  git cms-merge-topic cms-egamma:EgammaPostRecoTools
+  git cms-addpkg EgammaAnalysis/ElectronTools
+  rm -rf EgammaAnalysis/ElectronTools/data
+  git clone git@github.com:cms-data/EgammaAnalysis-ElectronTools.git EgammaAnalysis/ElectronTools/data
+  git cms-addpkg  RecoJets/JetProducers
+  git clone -b 94X_weights_DYJets_inc_v2 git@github.com:cms-jet/PUjetID.git PUJetIDweights/
+  cp PUJetIDweights/weights/pileupJetId_{94,102}X_Eta* $CMSSW_BASE/src/RecoJets/JetProducers/data/
+  
   cd FinalStateAnalysis
   source environment.sh
 ```
 
-Checkout extra needed code:
+Compile:
 
 ```bash
-  cd recipe/
-  # Checkout needed packages and apply patches
-  # do >> HZZ=1 ./recipe.sh  instead if you want H->ZZ MELA stuff.
-  ./recipe.sh
-  cd ..
-  # Setup FSA environment
-  source environment.sh
-  # Compile
-  pushd ..
-  scram b -j 8
-  popd
+  USER_CXXFLAGS="-Wno-delete-non-virtual-dtor -Wno-error=unused-but-set-variable -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=sign-compare -Wno-error=reorder -Wno-error=delete-non-virtual-dtor -fpermissive -std=c++17" scram b -j 12
 ```
 
-It is highly recommended to set up a python virtualenv with a number of nice tools:
-```bash
-  ./recipe/install_python.sh
-```
-The virtualenv is automatically activated by `environment.sh`.
-
-You must always set up the CMSSW environment + some extra variables from FinalStateAnalysis:
+Run:
 
 ```bash
-  cmsenv
-  source $CMSSW_BASE/src/FinalStateAnalysis/environment.sh
+  cd FinalStateAnalysis/NtupleTools/test/
+  cmsRun make_ntuples_cfg.py htt=1 era="2018" isMC=1 isEmbedded=0 skipMET=1 maxEvents=200 paramFile=../python/parameters/ztt.py runningLocal=1 fullJES=1 metShift=1 inputFiles=root://cms-xrd-global.cern.ch://store/mc/RunIIAutumn18MiniAOD/SUSYGluGluToHToAA_AToBB_AToTauTau_M-12_FilterTauTauTrigger_TuneCP5_13TeV_madgraph_pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/00000/A734E146-A24C-7549-AF2E-66B2E809DBA0.root
 ```
-

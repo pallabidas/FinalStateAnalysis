@@ -20,7 +20,6 @@
   <use   name="JetMETCorrections/Objects"/>
   <use   name="MuonAnalysis/MomentumScaleCalibration"/>
   <use   name="RecoVertex/KinematicFitPrimitives"/>
-  <use   name="RecoEgamma/EgammaTools"/>
   <use   name="EgammaAnalysis/ElectronTools"/>
   
   <use   name="RecoBTag/SecondaryVertex"/>
