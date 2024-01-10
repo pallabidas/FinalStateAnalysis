@@ -614,7 +614,7 @@ trigSource = "PAT" if options.isMC else "RECO"
 if options.isEmbedded:
     process.load("FinalStateAnalysis.PatTools.finalStates.patFinalStateEventProducer_cfi")
     #Trigger
-    process.patFinalStateEventProducer.trgResultsSrc= cms.InputTag("TriggerResults","","SIMembedding")
+    process.patFinalStateEventProducer.trgResultsSrc= cms.InputTag("TriggerResults","","SIMembeddingHLT")
     process.patFinalStateEventProducer.trgResultsSrc2= cms.InputTag("TriggerResults","","MERGE")
     if options.era=="2016":
 	process.patFinalStateEventProducer.trgResultsSrc2= cms.InputTag("TriggerResults","","PAT")
@@ -627,7 +627,7 @@ if options.isEmbedded:
     process.patFinalStateEventProducer.isEmbedded = cms.bool(True)
 
 
-    trigSource = "SIMembedding"
+    trigSource = "SIMembeddingHLT"
 
 
 process.filterFlags = cms.EDProducer(

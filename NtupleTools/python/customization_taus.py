@@ -757,11 +757,9 @@ def preTaus(process, year, isEmbedded, tSrc, vSrc,**kwargs):
         src=cms.InputTag(tSrc),
         bits = cms.InputTag("TriggerResults","","HLT"),
         objects = cms.InputTag("slimmedPatTrigger"),
-        #bits = cms.InputTag("TriggerResults","","SIMembedding"),
-        #objects = cms.InputTag("slimmedPatTrigger","","MERGE"),
     )
     if isEmbedded:
-        mod.bits=cms.InputTag("TriggerResults","","SIMembedding")
+        mod.bits=cms.InputTag("TriggerResults","","SIMembeddingHLT")
         mod.objects=cms.InputTag("slimmedPatTrigger","","MERGE")
 	if year=="2016":
 	   mod.objects=cms.InputTag("slimmedPatTrigger","","PAT")

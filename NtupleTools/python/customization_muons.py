@@ -28,11 +28,9 @@ def preMuons(process, year, isEmbedded, mSrc, vSrc, **kwargs):
         src=cms.InputTag(mSrc),
         bits = cms.InputTag("TriggerResults","","HLT"),
         objects = cms.InputTag("slimmedPatTrigger"),
-        #bits = cms.InputTag("TriggerResults","","SIMembedding"),
-        #objects = cms.InputTag("slimmedPatTrigger","","MERGE"),
     )
     if isEmbedded:
-        mod.bits=cms.InputTag("TriggerResults","","SIMembedding")
+        mod.bits=cms.InputTag("TriggerResults","","SIMembeddingHLT")
         mod.objects=cms.InputTag("slimmedPatTrigger","","MERGE")
 	if year=="2016":
 	   mod.objects=cms.InputTag("slimmedPatTrigger","","PAT")
