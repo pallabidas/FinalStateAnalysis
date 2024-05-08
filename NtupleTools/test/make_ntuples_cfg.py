@@ -219,6 +219,8 @@ process.source = cms.Source(
     eventsToSkip=eventsToSkip,
 )
 
+#process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange('320674:1-320674:50')
+
 from FinalStateAnalysis.NtupleTools.parameters.default import parameters
 if options.paramFile:
     # add custom parameters

@@ -98,7 +98,7 @@ import FinalStateAnalysis.Utilities.TauVarParsing as TauVarParsing
 options = TauVarParsing.TauVarParsing(
     skipEvents=0,  # Start at an event offset (for debugging)
     reportEvery=100,
-    channels='mt',
+    channels='em',
     rerunMCMatch=False,
     eventView=0,  # Switch between final state view (0) and event view (1)
     passThru=0,  # Turn off preselections
@@ -215,7 +215,7 @@ if options.eventsToSkip:
 
 process.source = cms.Source(
     "PoolSource",
-    fileNames=cms.untracked.vstring('file:/afs/cern.ch/work/p/pdas/haa/CMSSW_10_2_22/src/FinalStateAnalysis/NtupleTools/test/A734E146-A24C-7549-AF2E-66B2E809DBA0.root'),
+    fileNames=cms.untracked.vstring('root://cms-xrd-global.cern.ch://store/mc/RunIIAutumn18MiniAOD/VBFHToTauTau_M125_13TeV_powheg_pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15_ext1-v1/110000/0C53CE64-90D2-D840-9FDC-810C4E8124E5.root'),
     skipEvents=cms.untracked.uint32(options.skipEvents),
     eventsToSkip=eventsToSkip,
 )
@@ -247,14 +247,14 @@ if options.lumiMask:
     print "Applying LumiMask from", options.lumiMask
     process.source.lumisToProcess = options.buildPoolSourceLumiMask()
 
-listEventsToProcess = []
-fileEventsToProcess = open("/afs/cern.ch/work/p/pdas/haa/summer23/CMSSW_10_6_30/src/FinalStateAnalysis/NtupleTools/test/crab/VBFHtoTauTau.txt","r")
-for line in fileEventsToProcess:
-        cleanLine = line.rstrip()
-        listEventsToProcess.append(cleanLine+"-"+cleanLine)
-
-rangeEventsToProcess = cms.untracked.VEventRange(listEventsToProcess)
-process.source.eventsToProcess = rangeEventsToProcess
+#listEventsToProcess = []
+#fileEventsToProcess = open("/afs/cern.ch/work/p/pdas/haa/summer23/CMSSW_10_6_30/src/FinalStateAnalysis/NtupleTools/test/crab/VBFHtoTauTau.txt","r")
+#for line in fileEventsToProcess:
+#        cleanLine = line.rstrip()
+#        listEventsToProcess.append(cleanLine+"-"+cleanLine)
+#
+#rangeEventsToProcess = cms.untracked.VEventRange(listEventsToProcess)
+#process.source.eventsToProcess = rangeEventsToProcess
 
 process.TFileService = cms.Service(
     "TFileService", fileName=cms.string(options.outputFile)

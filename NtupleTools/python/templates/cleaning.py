@@ -70,14 +70,6 @@ vetos = addargs(
     deepflavourb2_btagscore = 'deepFlavourJetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & (bDiscriminator(\'pfDeepFlavourJetTags:probb\') + bDiscriminator(\'pfDeepFlavourJetTags:probbb\') + bDiscriminator(\'pfDeepFlavourJetTags:problepb\')) > 0.0494", 0.5).at(10)',
     deepflavourb2_hadronflavour = 'deepFlavourJetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & (bDiscriminator(\'pfDeepFlavourJetTags:probb\') + bDiscriminator(\'pfDeepFlavourJetTags:probbb\') + bDiscriminator(\'pfDeepFlavourJetTags:problepb\')) > 0.0494", 0.5).at(11)',
 
-    mergedb_pt = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(0)',
-    mergedb_eta = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(1)',
-    mergedb_phi = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(2)',
-    mergedb_deepcsvscore = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(3)',
-    mergedb_deepflavourscore = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(4)',
-    mergedb_hadronflavour = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(5)',
-    mergedb_pnetscore = 'jetVariables("pt > 20 & userFloat(\'idTight\') > 0.5 & abs(eta) < 2.4 & userFloat(\'matchesGenBB\') > 0.", 0.5).at(6)',
-
     ## Leading and sublead jets
     ### Comment for 2017
     j1pt = 'jetVariables("pt > 20 & abs(eta) < 4.7 & userFloat(\'idTight\') > 0.5 & (userInt(\'pileupJetId:fullId\')>3 | pt>50)", 0.5).at(0)',
