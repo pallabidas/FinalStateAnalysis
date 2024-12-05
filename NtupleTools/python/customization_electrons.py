@@ -10,11 +10,13 @@ def preElectrons(process, eSrc, vSrc, year, isEmbedded, **kwargs):
     runningLocal = kwargs.pop('runningLocal',False)
 
     from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq
-    myera='2018-Prompt'
+    myera='2018-UL'
+    if year=="2016APV":
+       myera='2016preVFP-UL'
     if year=="2016":
-       myera='2016-Legacy'
+       myera='2016postVFP-UL'
     if year=="2017":
-       myera='2017-Nov17ReReco'
+       myera='2017-UL'
 
     setupEgammaPostRecoSeq(process,
 		       eleIDModules=[
@@ -97,8 +99,6 @@ def preElectrons(process, eSrc, vSrc, year, isEmbedded, **kwargs):
     if isEmbedded:
 	mod.bits=cms.InputTag("TriggerResults","","SIMembeddingHLT")
 	mod.objects=cms.InputTag("slimmedPatTrigger","","MERGE")
-	if year=="2016": 
-	    mod.objects=cms.InputTag("slimmedPatTrigger","","PAT")
     eSrc = modName
     setattr(process,modName,mod)
 
@@ -138,7 +138,7 @@ def preElectrons(process, eSrc, vSrc, year, isEmbedded, **kwargs):
         leptonMvaWeightsMuTOP        = cms.FileInPath(training_file_mu)
 
     )
-    if year=="2016":
+    if year=="2016" or year=="2016APV":
         mod.is2016 = cms.bool(True)
     eSrc = modName
     setattr(process,modName,mod)

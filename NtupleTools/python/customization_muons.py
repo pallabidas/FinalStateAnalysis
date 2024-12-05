@@ -32,8 +32,6 @@ def preMuons(process, year, isEmbedded, mSrc, vSrc, **kwargs):
     if isEmbedded:
         mod.bits=cms.InputTag("TriggerResults","","SIMembeddingHLT")
         mod.objects=cms.InputTag("slimmedPatTrigger","","MERGE")
-	if year=="2016":
-	   mod.objects=cms.InputTag("slimmedPatTrigger","","PAT")
 
     mSrc = modName
     setattr(process,modName,mod)
@@ -77,13 +75,13 @@ def preMuons(process, year, isEmbedded, mSrc, vSrc, **kwargs):
     training_file = "FinalStateAnalysis/NtupleTools/data/el_TOP18_BDTG.weights.xml"
     training_file_mu="FinalStateAnalysis/NtupleTools/data/mu_TOP18_BDTG.weights.xml"
     training_file = "FinalStateAnalysis/NtupleTools/data/el_TOP18_BDTG.weights.xml"
-    if year=="2016":
+    if year=="2016" or year=="2016APV":
        training_file="FinalStateAnalysis/NtupleTools/data/el_TOP16_BDTG.weights.xml"
     if year=="2017":
        training_file="FinalStateAnalysis/NtupleTools/data/el_TOP17_BDTG.weights.xml"
 
     training_file_mu="FinalStateAnalysis/NtupleTools/data/mu_TOP18_BDTG.weights.xml"
-    if year=="2016":
+    if year=="2016" or year=="2016APV":
        training_file_mu="FinalStateAnalysis/NtupleTools/data/mu_TOP16_BDTG.weights.xml"
     if year=="2017":
        training_file_mu="FinalStateAnalysis/NtupleTools/data/mu_TOP17_BDTG.weights.xml"
@@ -103,7 +101,7 @@ def preMuons(process, year, isEmbedded, mSrc, vSrc, **kwargs):
         leptonMvaWeightsMuTOP        = cms.FileInPath(training_file_mu)
 
     )
-    if year=="2016":
+    if year=="2016" or year=="2016APV":
         mod.is2016 = cms.bool(True)
     mSrc = modName
     setattr(process,modName,mod)

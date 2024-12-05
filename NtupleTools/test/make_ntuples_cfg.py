@@ -219,8 +219,6 @@ process.source = cms.Source(
     eventsToSkip=eventsToSkip,
 )
 
-#process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange('320674:1-320674:50')
-
 from FinalStateAnalysis.NtupleTools.parameters.default import parameters
 if options.paramFile:
     # add custom parameters
@@ -354,16 +352,18 @@ if options.usePUPPI:
 #####################
 ### Pileup Jet ID ###
 #####################
-
-
-from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_94x, _chsalgos_102x
+from RecoJets.JetProducers.PileupJetID_cfi import _chsalgos_106X_UL16APV, _chsalgos_106X_UL16, _chsalgos_106X_UL17, _chsalgos_106X_UL18
 process.load("RecoJets.JetProducers.PileupJetID_cfi")
 process.pileupJetId.inputIsCorrected = True
 process.pileupJetId.vertexes = cms.InputTag("offlineSlimmedPrimaryVertices")
+if options.era=="2016APV":
+  process.pileupJetId.algos = cms.VPSet(_chsalgos_106X_UL16APV)
+if options.era=="2016":
+  process.pileupJetId.algos = cms.VPSet(_chsalgos_106X_UL16)
 if options.era=="2017":
-  process.pileupJetId.algos = cms.VPSet(_chsalgos_94x) # for 2017
+  process.pileupJetId.algos = cms.VPSet(_chsalgos_106X_UL17)
 if options.era=="2018":
-  process.pileupJetId.algos = cms.VPSet(_chsalgos_102x) # for 2018
+  process.pileupJetId.algos = cms.VPSet(_chsalgos_106X_UL18)
 
 process.pileupJetIdUpdated = process.pileupJetId.clone(
   jets=cms.InputTag("slimmedJets"),
@@ -618,13 +618,9 @@ if options.isEmbedded:
     #Trigger
     process.patFinalStateEventProducer.trgResultsSrc= cms.InputTag("TriggerResults","","SIMembeddingHLT")
     process.patFinalStateEventProducer.trgResultsSrc2= cms.InputTag("TriggerResults","","MERGE")
-    if options.era=="2016":
-	process.patFinalStateEventProducer.trgResultsSrc2= cms.InputTag("TriggerResults","","PAT")
     #GenInfo
     #process.patFinalStateEventProducer.genParticleSrc = cms.InputTag("prunedGenParticles", "", "MERGE")
     process.patFinalStateEventProducer.packedGenSrc = cms.InputTag("packedGenParticles", "", "MERGE")
-    if options.era=="2016":
-	process.patFinalStateEventProducer.packedGenSrc = cms.InputTag("packedGenParticles", "", "PAT")
     process.patFinalStateEventProducer.l1extraIsoTauSrc=cms.InputTag("caloStage2Digis","Tau","SIMembedding")
     process.patFinalStateEventProducer.isEmbedded = cms.bool(True)
 
@@ -717,19 +713,10 @@ from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMet
 
 # If you only want to re-correct and get the proper uncertainties
 
-if options.era=="2017":
-    runMetCorAndUncFromMiniAOD(process,
-       isData=isData,
-       fixEE2017 = True,
-       fixEE2017Params = {"userawPt": True, "ptThreshold":50.0, "minEtaThreshold":2.65, "maxEtaThreshold": 3.139} ,
-       postfix = "ModifiedMET"
-                        )
-
-else:
-    runMetCorAndUncFromMiniAOD(process,
-       isData=isData,
-       postfix = "ModifiedMET"
-                        )
+runMetCorAndUncFromMiniAOD(process,
+   isData=isData,
+   postfix = "ModifiedMET"
+)
 
 process.correctMET=cms.Path(process.fullPatMetSequenceModifiedMET)
 process.schedule.append(process.correctMET)
@@ -851,7 +838,7 @@ if options.era=="2018" or options.era=="2018prompt":
 if options.era=="2017":
   from FinalStateAnalysis.NtupleTools.customization_2017jets import preJets
   from FinalStateAnalysis.NtupleTools.customization_2017metjets import preMETFromJES
-if options.era=="2016":
+if options.era=="2016" or options.era=="2016APV":
   from FinalStateAnalysis.NtupleTools.customization_2016jets import preJets
   from FinalStateAnalysis.NtupleTools.customization_2016metjets import preMETFromJES
 
